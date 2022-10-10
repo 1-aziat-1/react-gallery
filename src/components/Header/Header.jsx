@@ -13,7 +13,7 @@ export const Header = () => {
        <div className={_.flexContainer}>
         <Logo/>
         <Search/>
-        <Auth/>
+        <Auth auth={false}/>
        </div>
       </Layout>
     </header>
