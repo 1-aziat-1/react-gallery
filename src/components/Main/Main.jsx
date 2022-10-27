@@ -1,7 +1,8 @@
 import React from 'react';
-import style from './Main.module.css';
+import _ from './Main.module.css';
+import {Text} from '../../UI/Text';
 
 export const Main = () => {
-    console.log();
-    return {};
+  console.log();
+  return {};
 };
