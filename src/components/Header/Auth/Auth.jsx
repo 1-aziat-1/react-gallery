@@ -10,7 +10,6 @@ export const Auth = ({token}) => {
   const [auth, setAuth] = useState({});
 
   useEffect(() => {
-    console.log(token);
     if (!token) return;
 
     fetch(`${API_URL}/me`, {

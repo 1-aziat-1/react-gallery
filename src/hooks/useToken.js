@@ -13,6 +13,12 @@ export const useToken = (state) => {
   let searchParams;
 
   useEffect(() => {
+    if (localStorage.getItem('bearer')) {
+      setToken(localStorage.getItem('bearer'));
+    }
+  }, []);
+
+  useEffect(() => {
     if (!codeKey) return;
 
     searchParams = new URLSearchParams('');
@@ -23,8 +29,8 @@ export const useToken = (state) => {
     searchParams.append('grant_type', 'authorization_code');
 
     const urlBody = searchParams.toString();
+
     if (!token) {
-      console.log(1);
       fetch(`${URL_TOKEN}`, {
         method: 'POST',
         headers: {
@@ -40,10 +46,6 @@ export const useToken = (state) => {
           console.error(err);
           setToken('');
         });
-    }
-
-    if (localStorage.getItem('bearer')) {
-      setToken(localStorage.getItem('bearer'));
     }
   }, [codeKey]);
 
