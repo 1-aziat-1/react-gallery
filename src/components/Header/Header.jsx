@@ -6,7 +6,7 @@ import Search from './Search';
 import Logo from './Logo';
 import PropTypes from 'prop-types';
 
-export const Header = ({auth}) => {
+export const Header = ({token}) => {
   console.log();
   return (
     <header className={_.header}>
@@ -14,7 +14,7 @@ export const Header = ({auth}) => {
         <div className={_.flexContainer}>
           <Logo/>
           <Search/>
-          <Auth auth={false}/>
+          <Auth token={token}/>
         </div>
       </Layout>
     </header>
@@ -22,5 +22,5 @@ export const Header = ({auth}) => {
 };
 
 Header.propTypes = {
-  auth: PropTypes.bool,
+  token: PropTypes.string,
 };

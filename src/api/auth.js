@@ -1,5 +1,5 @@
 import {
-  API_URL_AUTH,
+  URL_AUTH,
   ACCESS_KEY,
   REDIRECT_URI,
   RESPONSE_TYPE,
@@ -13,4 +13,6 @@ searchParams.append('redirect_uri', REDIRECT_URI);
 searchParams.append('response_type', RESPONSE_TYPE);
 searchParams.append('scope', SCOPE);
 
-export const urlAuth = `${API_URL_AUTH}${searchParams.toString()}`;
+export const urlAuth = `${URL_AUTH}${searchParams.toString()}`;
+
+
