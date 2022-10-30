@@ -21,5 +21,9 @@ export const useCodeKey = (state) => {
     }
   }, [codeKey]);
 
-  return [codeKey];
+  const delCodeKey = () => {
+    localStorage.removeItem('code');
+  };
+
+  return [codeKey, delCodeKey];
 };

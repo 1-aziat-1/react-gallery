@@ -1,41 +1,31 @@
-import React, {useEffect, useState} from 'react';
 import _ from './Auth.module.css';
 import {urlAuth} from '../../../api/auth';
 import {ReactComponent as LoginIcon} from '../../../img/login.svg';
 import {Text} from '../../../UI/Text';
 import PropTypes from 'prop-types';
-import {API_URL} from '../../../api/const';
+import {useAuth} from '../../../hooks/useAuth';
+import {useState} from 'react';
 
-export const Auth = ({token}) => {
-  const [auth, setAuth] = useState({});
+export const Auth = ({token, delToken}) => {
+  const [auth, clearAuth] = useAuth(token);
+  const [showLogout, setShowLogout] = useState(false);
+  const getOut = () => {
+    setShowLogout(!showLogout);
+  };
 
-  useEffect(() => {
-    if (!token) return;
-
-    fetch(`${API_URL}/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(({name, profile_image: iconImg}) => {
-        const img = iconImg.small;
-        setAuth({name, img});
-      })
-      .catch(err => {
-        console.error(err);
-        setAuth({});
-      });
-  }, [token]);
+  const logOut = () => {
+    delToken();
+    clearAuth();
+  };
 
   return (
     <div className={_.container}>
       {auth.name ? (
         <>
-          <button>
-            <img src={auth.img} title={auth.name} alt={`Аватар`} />
+          <button className={_.btn}  onClick={getOut}>
+            <Text>{auth.name}</Text>
           </button>
-          <Text>{auth.name}</Text>
+          {showLogout && <button className={_.logout} onClick={logOut}>{'Выйти'}</button>}
         </>
         ) : (
           <Text className={_.authLink} As='a' href={urlAuth}>
@@ -48,4 +38,5 @@ export const Auth = ({token}) => {
 
 Auth.propTypes = {
   token: PropTypes.string,
+  delToken: PropTypes.func,
 };

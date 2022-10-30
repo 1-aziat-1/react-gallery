@@ -9,7 +9,7 @@ import {
 
 export const useToken = (state) => {
   const [token, setToken] = useState(state);
-  const [codeKey] = useCodeKey('');
+  const [codeKey, delCodeKey] = useCodeKey('');
   let searchParams;
 
   useEffect(() => {
@@ -55,5 +55,10 @@ export const useToken = (state) => {
     }
   }, [token]);
 
-  return [token];
+  const delToken = () => {
+    delCodeKey();
+    localStorage.removeItem('bearer');
+  };
+
+  return [token, delToken];
 };
