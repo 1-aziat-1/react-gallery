@@ -1,13 +1,17 @@
+import {getToken} from './api/token';
 import Header from './components/Header';
-import {useToken} from './hooks/useToken';
+import {useDispatch} from 'react-redux';
+import {tokenUpdate} from './store/token/action';
 
 function App() {
-  const [token, delToken] = useToken('');
+  const dispath = useDispatch();
+
+  dispath(tokenUpdate(getToken()));
 
   return (
-    <div className="_.container">
-      <Header token={token} delToken={delToken}/>
-    </div>
+    <>
+      <Header/>
+    </>
   );
 }
 

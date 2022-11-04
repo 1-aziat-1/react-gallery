@@ -4,9 +4,8 @@ import Layout from '../Layout';
 import Auth from './Auth';
 import Search from './Search';
 import Logo from './Logo';
-import PropTypes from 'prop-types';
 
-export const Header = ({token, delToken}) => {
+export const Header = () => {
   console.log();
   return (
     <header className={_.header}>
@@ -14,14 +13,9 @@ export const Header = ({token, delToken}) => {
         <div className={_.flexContainer}>
           <Logo/>
           <Search/>
-          <Auth token={token} delToken={delToken}/>
+          <Auth />
         </div>
       </Layout>
     </header>
   );
-};
-
-Header.propTypes = {
-  token: PropTypes.string,
-  delToken: PropTypes.func
 };
