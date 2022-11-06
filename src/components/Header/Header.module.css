@@ -1,6 +1,7 @@
 .header {
   padding: 15px 0;
   background-color: var(--blue);
+  margin-bottom: 30px;
 }
 
 .flexContainer {
