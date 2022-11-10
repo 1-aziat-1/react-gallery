@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 
 export const Post = ({postData}) => {
   const {
-    id,
     likes,
     urls: link,
   } = postData;
 
   return (
     <li className={_.post}>
-      <div>
+      <div className={_.img}>
         <img src={link.small}/>
       </div>
+      <div className={_.likes_wrap}>{likes}</div>
     </li>
   );
 };

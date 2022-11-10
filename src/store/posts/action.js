@@ -7,6 +7,8 @@ import {
 export const POSTS_REQUEST = 'POSTS_REQUEST';
 export const POSTS_REQUEST_SUCCESS = 'POSTS_REQUEST_SUCCESS';
 export const POSTS_REQUEST_ERROR = 'POSTS_REQUEST_ERROR';
+export const POSTS_REQUEST_SUCCESS_PAGE = 'POSTS_REQUEST_SUCCESS_PAGE';
+export const CHANGE_PAGE = 'CHANGE_PAGE';
 
 export const postsRequest = () => ({
   type: POSTS_REQUEST,
@@ -18,22 +20,39 @@ export const postsRequestSuccess = (data) => ({
 }
 );
 
+export const postsRequestSuccessPage = (data) => ({
+  type: POSTS_REQUEST_SUCCESS_PAGE,
+  posts: data,
+}
+);
+
 export const postsRequestError = (error) => ({
   type: POSTS_REQUEST_ERROR,
   error,
 });
 
-export const postsRequestAsync = () => (dispatch, getState) => {
+export const changePage = (page) => ({
+  type: CHANGE_PAGE,
+  page,
+});
+
+export const postsRequestAsync = (newPage) => (dispatch, getState) => {
+  const loading = getState().posts.loading;
+  let page = getState().posts.page;
+  if (page !== newPage) {
+    page = newPage;
+    dispatch(changePage(page));
+  }
+  if (loading) return;
   dispatch(postsRequest());
-  axios(`${API_URL}/photos`, {
-    params: {
-      client_id: ACCESS_KEY,
-      page: 1,
-      order_by: 'latest',
-    }
-  })
+  // eslint-disable-next-line max-len
+  axios(`${API_URL}/photos?client_id=${ACCESS_KEY}&${page ? `page=${page}` : ''}&per_page=30&order_by=latest`)
     .then(({data}) => {
-      dispatch(postsRequestSuccess(data));
+      if (page > 1) {
+        dispatch(postsRequestSuccessPage(data));
+      } else {
+        dispatch(postsRequestSuccess(data));
+      }
     })
     .catch((error) => {
       console.error(error);
