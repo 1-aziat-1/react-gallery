@@ -1,0 +1,75 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal {
+  position: absolute;
+  background-color: var(--white);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 15px;
+  inset: 5%;
+  border-radius: 16px;
+  margin-bottom: 10px;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: transparent;
+  border: none;
+  width: 15px;
+  height: 15px;
+}
+
+.interface {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.img_wraper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.btn_likes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 60px;
+  padding: 5px;
+  border-radius: 10px;
+  border: solid 1px #000;
+}
+
+.btn_numb{
+  margin-left: 5px;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    padding: 30px;
+    inset: 10%;
+  }
+
+}
+
+@media (min-width: 1024px) {
+  .modal {
+    padding: 50px;
+    inset: 15%;
+  }
+}

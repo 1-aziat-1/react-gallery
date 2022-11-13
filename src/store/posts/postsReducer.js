@@ -10,7 +10,7 @@ const initialState = {
   loading: false,
   posts: [],
   error: '',
-  page: 1,
+  page: 0,
 };
 
 export const postsReducer = (state = initialState, action) => {

@@ -37,12 +37,12 @@ export const changePage = (page) => ({
 });
 
 export const postsRequestAsync = (newPage) => (dispatch, getState) => {
-  const loading = getState().posts.loading;
   let page = getState().posts.page;
   if (page !== newPage) {
     page = newPage;
     dispatch(changePage(page));
   }
+  const loading = getState().posts.loading;
   if (loading) return;
   dispatch(postsRequest());
   // eslint-disable-next-line max-len

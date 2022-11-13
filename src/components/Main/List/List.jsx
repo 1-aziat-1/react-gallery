@@ -9,19 +9,25 @@ export const List = () => {
   const postsData = useSelector(state => state.posts.posts);
   const endList = useRef(null);
   const dispatch = useDispatch();
-  let page = 1;
+  let page = 0;
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
+        page = ++page;
         dispatch(postsRequestAsync(page));
       }
-      page = ++page;
     }, {
       rootMargin: '100px',
     });
 
     observer.observe(endList.current);
+
+    return () => {
+      if (endList.current) {
+        observer.unobserve(endList.current);
+      }
+    }
   }, [endList.current]);
 
   return (
