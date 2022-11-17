@@ -4,9 +4,10 @@ import {pictureRequestAsync} from '../store/picture/action';
 
 export const usePicture = (id) => {
   const token = useSelector(state => state.token.token);
-  const picture = useSelector(state => state.picture.picture);
   const likes = useSelector(state => state.picture.likes);
   const isLiked = useSelector(state => state.picture.isLiked);
+  const loading = useSelector(state => state.picture.loading);
+  const img = useSelector(state => state.picture.img);
   const dispatch = useDispatch();
 
 
@@ -14,5 +15,5 @@ export const usePicture = (id) => {
     dispatch(pictureRequestAsync(id));
   }, [token]);
 
-  return [picture, likes, isLiked];
+  return [img, likes, isLiked, loading];
 };

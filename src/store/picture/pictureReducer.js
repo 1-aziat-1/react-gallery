@@ -9,6 +9,7 @@ const initialState = {
   loading: false,
   error: '',
   picture: [],
+  img: '',
   likes: 0,
   isLiked: false,
 };
@@ -26,6 +27,8 @@ export const pictureReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         picture: action.picture,
+        img: action.picture.urls.regular,
+        likes: action.picture.likes,
         error: '',
       };
     case PICTURE_REQUEST_ERROR:
@@ -33,6 +36,12 @@ export const pictureReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.error,
+      };
+    case LIKE_CHANGE:
+      return {
+        ...state,
+        isLiked: true,
+        likes: action.likes,
       };
     default:
       return state;

@@ -16,6 +16,8 @@ export const pictureRequest = () => ({
 export const pictureRequestSuccess = (data) => ({
   type: PICTURE_REQUEST_SUCCESS,
   picture: data,
+  img: data.urls.regular,
+  likes: data.likes,
 });
 
 export const pictureRequestError = (error) => ({
@@ -45,5 +47,29 @@ export const pictureRequestAsync = (id) => (dispatch, getState) => {
     .catch((error) => {
       console.error(error);
       dispatch(pictureRequestError(error));
+    });
+};
+
+export const likeChangeAsync = (id) => (dispatch, getState) => {
+  const token = getState().token.token;
+
+  if (!token) return;
+
+  axios
+    .post(`${API_URL}/photos/${id}/like`,
+      {
+        id: `${id}`
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .then(({data}) => {
+      dispatch(likeChange(data.photo.likes));
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };
