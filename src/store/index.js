@@ -5,10 +5,12 @@ import {tokenReducer} from './token/tokenReducer';
 import {authReducer} from './auth/authReducer';
 import thunk from 'redux-thunk';
 import {postsReducer} from './posts/postsReducer';
+import {pictureReducer} from './picture/pictureReducer';
 
 const rootReducer = combineReducers({
   token: tokenReducer,
   auth: authReducer,
+  picture: pictureReducer,
   posts: postsReducer,
 });
 

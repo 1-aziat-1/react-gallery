@@ -5,11 +5,13 @@ import {Modal} from '../../../Modal/Modal';
 
 export const Post = ({postData}) => {
   const {
+    id,
     likes,
     urls: link,
   } = postData;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   return (
     <li className={_.post} onClick={() => {setIsModalOpen(true)}}>
@@ -17,7 +19,7 @@ export const Post = ({postData}) => {
         <img src={link.small}/>
       </div>
       <div className={_.likes_wrap}>{likes}</div>
-      {isModalOpen && <Modal likes={likes} link={link}/>}
+      {isModalOpen && <Modal id={id}/>}
     </li>
   );
 };
