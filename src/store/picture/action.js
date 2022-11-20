@@ -8,6 +8,8 @@ export const PICTURE_REQUEST = 'PICTURE_REQUEST';
 export const PICTURE_REQUEST_SUCCESS = 'PICTURE_REQUEST_SUCCESS';
 export const PICTURE_REQUEST_ERROR = 'PICTURE_REQUEST_ERROR';
 export const LIKE_CHANGE = 'LIKE_CHANGE';
+export const LIKE_DELETE = 'LIKE_DELETE';
+export const UPDATE_PICTURE = 'UPDATE_PICTURE';
 
 export const pictureRequest = () => ({
   type: PICTURE_REQUEST,
@@ -25,9 +27,22 @@ export const pictureRequestError = (error) => ({
   error,
 });
 
-export const likeChange = (likes) => ({
+export const likeChange = (data) => ({
   type: LIKE_CHANGE,
-  likes,
+  picture: data,
+  likes: data.likes,
+  isLiked: data.liked_by_user,
+});
+
+export const likeDelete = (data) => ({
+  type: LIKE_DELETE,
+  picture: data,
+  likes: data.likes,
+  isLiked: data.liked_by_user,
+});
+
+export const updatePicture = () => ({
+  type: UPDATE_PICTURE,
 });
 
 export const pictureRequestAsync = (id) => (dispatch, getState) => {
@@ -67,7 +82,26 @@ export const likeChangeAsync = (id) => (dispatch, getState) => {
       }
     )
     .then(({data}) => {
-      dispatch(likeChange(data.photo.likes));
+      dispatch(likeChange(data.photo));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const likeDeleteAsync = (id) => (dispatch, getState) => {
+  const token = getState().token.token;
+
+  if (!token) return;
+
+  axios
+    .delete(`${API_URL}/photos/${id}/like`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(({data}) => {
+      dispatch(likeDelete(data.photo));
     })
     .catch((error) => {
       console.log(error);

@@ -7,38 +7,25 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useState} from 'react';
 import {usePicture} from '../../hooks/usePicture';
 import {useEffect} from 'react';
-import {likeChangeAsync} from '../../store/picture/action';
+import {likeChangeAsync, likeDeleteAsync, updatePicture} from '../../store/picture/action';
 
 export const Modal = ({id}) => {
   const auth = useSelector(state => state.auth.data);
-  const token = useSelector(state => state.token.token);
   const [img, likes, isLiked] = usePicture(id);
-  const [check, setCheck] = useState(false);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(updatePicture());
+  }, []);
+
   const clickLike = () => {
-    useEffect(() => {
+    if (!isLiked) {
       dispatch(likeChangeAsync(id));
-    }, [isLiked]);
-    
-    // setCheck(!check);
-    // if (check) {
-     
-    // }
-    // if (!check) {
-    //   axios
-    //     .delete(`${API_URL}/photos/${id}/like`, {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     })
-    //     .then(({data}) => {
-    //       setLike(data.photo.likes);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // }
+    }
+
+    if (isLiked) {
+      dispatch(likeDeleteAsync(id));
+    }
   };
 
   return ReactDOM.createPortal(

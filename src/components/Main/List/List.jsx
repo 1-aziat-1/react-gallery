@@ -18,7 +18,7 @@ export const List = () => {
         dispatch(postsRequestAsync(page));
       }
     }, {
-      rootMargin: '100px',
+      rootMargin: '50px',
     });
 
     observer.observe(endList.current);

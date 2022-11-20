@@ -1,8 +1,10 @@
 import {
   LIKE_CHANGE,
+  LIKE_DELETE,
+  UPDATE_PICTURE,
   PICTURE_REQUEST,
   PICTURE_REQUEST_ERROR,
-  PICTURE_REQUEST_SUCCESS
+  PICTURE_REQUEST_SUCCESS,
 } from './action';
 
 const initialState = {
@@ -22,6 +24,14 @@ export const pictureReducer = (state = initialState, action) => {
         loading: true,
         error: '',
       };
+    case UPDATE_PICTURE:
+      return {
+        error: '',
+        picture: [],
+        img: '',
+        likes: 0,
+        isLiked: false,
+      };
     case PICTURE_REQUEST_SUCCESS:
       return {
         ...state,
@@ -40,7 +50,15 @@ export const pictureReducer = (state = initialState, action) => {
     case LIKE_CHANGE:
       return {
         ...state,
-        isLiked: true,
+        picture: action.picture,
+        isLiked: action.isLiked,
+        likes: action.likes,
+      };
+    case LIKE_DELETE:
+      return {
+        ...state,
+        picture: action.picture,
+        isLiked: action.isLiked,
         likes: action.likes,
       };
     default:
