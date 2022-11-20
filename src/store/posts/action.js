@@ -9,6 +9,7 @@ export const POSTS_REQUEST_SUCCESS = 'POSTS_REQUEST_SUCCESS';
 export const POSTS_REQUEST_ERROR = 'POSTS_REQUEST_ERROR';
 export const POSTS_REQUEST_SUCCESS_PAGE = 'POSTS_REQUEST_SUCCESS_PAGE';
 export const CHANGE_PAGE = 'CHANGE_PAGE';
+export const UPDATE_POSTS = 'UPDATE_POSTS';
 
 export const postsRequest = () => ({
   type: POSTS_REQUEST,
@@ -34,6 +35,10 @@ export const postsRequestError = (error) => ({
 export const changePage = (page) => ({
   type: CHANGE_PAGE,
   page,
+});
+
+export const updatePosts = () => ({
+  type: UPDATE_POSTS,
 });
 
 export const postsRequestAsync = (newPage) => (dispatch, getState) => {

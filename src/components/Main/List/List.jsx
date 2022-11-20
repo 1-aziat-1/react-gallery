@@ -3,13 +3,18 @@ import {useDispatch, useSelector} from 'react-redux';
 import _ from './List.module.css';
 import Masonry from 'react-masonry-css';
 import Post from './Post';
-import {postsRequestAsync} from '../../../store/posts/action';
+import {postsRequestAsync, updatePosts} from '../../../store/posts/action';
 
 export const List = () => {
   const postsData = useSelector(state => state.posts.posts);
   const endList = useRef(null);
   const dispatch = useDispatch();
   let page = 0;
+
+  useEffect(() => {
+    dispatch(updatePosts());
+    dispatch(postsRequestAsync(0));
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {

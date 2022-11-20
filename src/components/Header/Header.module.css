@@ -6,7 +6,7 @@
 
 .flexContainer {
   display: grid;
-  grid-template-columns: 60px 1fr 60px;
+  grid-template-columns: 60px 60px;
   justify-content: space-between;
   align-items: center;
   gap: 15px;

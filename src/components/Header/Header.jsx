@@ -12,7 +12,6 @@ export const Header = () => {
       <Layout>
         <div className={_.flexContainer}>
           <Logo/>
-          <Search/>
           <Auth />
         </div>
       </Layout>

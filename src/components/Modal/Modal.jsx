@@ -8,44 +8,52 @@ import {useState} from 'react';
 import {usePicture} from '../../hooks/usePicture';
 import {useEffect} from 'react';
 import {likeChangeAsync, likeDeleteAsync, updatePicture} from '../../store/picture/action';
+import { likeUpdate } from '../../api/like';
 
 export const Modal = ({id}) => {
   const auth = useSelector(state => state.auth.data);
-  const [img, likes, isLiked] = usePicture(id);
-  const dispatch = useDispatch();
+  const {likes, urls, liked_by_user:isLiked} = usePicture(id);
+  const loading = useSelector(state => state.picture.loading);
+  const token = useSelector(state => state.token.token);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(updatePicture());
   }, []);
 
   const clickLike = () => {
     if (!isLiked) {
-      dispatch(likeChangeAsync(id));
+      likeUpdate(id, token, 'post');
     }
-
     if (isLiked) {
-      dispatch(likeDeleteAsync(id));
+      likeUpdate(id, token, 'delete');
     }
   };
 
   return ReactDOM.createPortal(
     <div className={_.overlay}>
       <div className={_.modal}>
-        <div className={_.container}>
-          <div className={_.img_wraper}>
-            <img className={_.img} src={img}/>
-          </div>
-          <div className={_.interface}>
-            <p className={_.author}>{auth.name}</p>
-            <button className={_.btn_likes} onClick={clickLike}>
-              <LikeIcon/>
-              <p className={_.btn_numb}>{likes}</p>
-            </button>
-          </div>
-          <button className={_.close}>
-            <CloseIcon />
-          </button>
-        </div>
+        {
+          loading ?
+            (<p>Загрузка</p>) :
+            (
+              <div className={_.container}>
+                <div className={_.img_wraper}>
+                  <img className={_.img} src={urls?.regular}/>
+                </div>
+                <div className={_.interface}>
+                  <p className={_.author}>{auth.name}</p>
+                  <button className={_.btn_likes} onClick={clickLike}>
+                    <LikeIcon/>
+                    <p className={_.btn_numb}>{likes}</p>
+                  </button>
+                </div>
+                <button className={_.close}>
+                  <CloseIcon />
+                </button>
+              </div>
+            )
+        }
       </div>
     </div>,
     document.getElementById('modal-root'),

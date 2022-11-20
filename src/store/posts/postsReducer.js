@@ -4,6 +4,7 @@ import {
   POSTS_REQUEST_SUCCESS,
   POSTS_REQUEST_SUCCESS_PAGE,
   CHANGE_PAGE,
+  UPDATE_POSTS,
 } from './action';
 
 const initialState = {
@@ -20,6 +21,13 @@ export const postsReducer = (state = initialState, action) => {
         ...state,
         loading: true,
         error: '',
+      };
+    case UPDATE_POSTS:
+      return {
+        ...state,
+        posts: [],
+        error: '',
+        page: 0,
       };
     case POSTS_REQUEST_SUCCESS:
       return {
