@@ -7,18 +7,17 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useState} from 'react';
 import {usePicture} from '../../hooks/usePicture';
 import {useEffect} from 'react';
-import {likeChangeAsync, likeDeleteAsync, updatePicture} from '../../store/picture/action';
 import { likeUpdate } from '../../api/like';
+import { pictureSlice } from '../../store/picture/pictureSlice';
 
 export const Modal = ({id}) => {
   const auth = useSelector(state => state.auth.data);
-  const {likes, urls, liked_by_user:isLiked} = usePicture(id);
-  const loading = useSelector(state => state.picture.loading);
+  const [{likes, urls, liked_by_user:isLiked}, status] = usePicture(id);
   const token = useSelector(state => state.token.token);
-
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(updatePicture());
+    dispatch(pictureSlice.actions.resetPicture());
   }, []);
 
   const clickLike = () => {
@@ -33,26 +32,25 @@ export const Modal = ({id}) => {
   return ReactDOM.createPortal(
     <div className={_.overlay}>
       <div className={_.modal}>
-        {
-          loading ?
-            (<p>Загрузка</p>) :
-            (
-              <div className={_.container}>
-                <div className={_.img_wraper}>
-                  <img className={_.img} src={urls?.regular}/>
-                </div>
-                <div className={_.interface}>
-                  <p className={_.author}>{auth.name}</p>
-                  <button className={_.btn_likes} onClick={clickLike}>
-                    <LikeIcon/>
-                    <p className={_.btn_numb}>{likes}</p>
-                  </button>
-                </div>
-                <button className={_.close}>
-                  <CloseIcon />
-                </button>
-              </div>
-            )
+        {status === 'loading' && <p>loading</p>}
+        {status === 'error' && 'ошибка'}
+        {status === 'loaded' && (
+          <div className={_.container}>
+            <div className={_.img_wraper}>
+              <img className={_.img} src={urls.small}/>
+            </div>
+            <div className={_.interface}>
+              <p className={_.author}>{auth.name}</p>
+              <button className={_.btn_likes} onClick={clickLike}>
+                <LikeIcon/>
+                <p className={_.btn_numb}>{likes}</p>
+              </button>
+            </div>
+            <button className={_.close}>
+              <CloseIcon />
+            </button>
+          </div>
+        )
         }
       </div>
     </div>,
