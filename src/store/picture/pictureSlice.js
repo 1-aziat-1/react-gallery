@@ -5,6 +5,7 @@ const initialState = {
   error: '',
   picture: {},
   likes: 0,
+  isLikes: false,
   status: '',
 };
 
@@ -12,11 +13,13 @@ export const pictureSlice = createSlice({
   name: 'picture',
   initialState,
   reducers: {
-    resetPicture: (state, action) => {
+    newPhoto: state => {
       state.picture = {};
-      state.likes = 0;
-      state.status = '';
-    }
+    },
+    changeLike: state => {
+      state.isLikes = !state.isLikes;
+      state.likes += state.isLikes ? 1 : -1;
+    },
   },
   extraReducers: {
     [pictureRequestAsync.pending.type]: (state) => {
@@ -25,7 +28,9 @@ export const pictureSlice = createSlice({
     },
     [pictureRequestAsync.fulfilled.type]: (state, action) => {
       state.status = 'loaded';
-      state.picture = action.payload;
+      state.picture = action.payload.data;
+      state.likes = action.payload?.likes || 0;
+      state.isLikes = action.payload?.isLikes || false;
       state.error = '';
     },
     [pictureRequestAsync.rejected.type]: (state, action) => {

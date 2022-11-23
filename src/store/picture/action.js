@@ -7,12 +7,18 @@ import {
 
 export const pictureRequestAsync = createAsyncThunk(
   'picture/axios',
-  (id, {getState}) => axios(`${API_URL}/photos/${id}`, {
-    params: {
-      client_id: `${ACCESS_KEY}`,
-      id: `${id}`,
+  (id, {getState}) => {
+    const token = getState().token.token;
+    const headers = {};
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
     }
-  })
-    .then(({data}) => (data))
-    .catch((error) => (error.toString()))
-);
+    return axios(`${API_URL}/photos/${id}?client_id=${ACCESS_KEY}`, {headers}
+    )
+      .then(({data}) => {
+        const likes = data.likes;
+        const isLikes = data.liked_by_user;
+        return { data, likes, isLikes };
+      })
+      .catch((error) => (error.toString()));
+  });

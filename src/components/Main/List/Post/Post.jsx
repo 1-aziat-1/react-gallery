@@ -1,25 +1,22 @@
-import React, {useState} from 'react';
 import _ from './Post.module.css';
 import PropTypes from 'prop-types';
-import {Modal} from '../../../Modal/Modal';
+import { Link } from 'react-router-dom';
 
 export const Post = ({postData}) => {
   const {
     id,
     likes,
-    urls: link,
+    urls,
   } = postData;
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-
   return (
-    <li className={_.post} onClick={() => {setIsModalOpen(true)}}>
-      <div className={_.img}>
-        <img src={link.small}/>
-      </div>
-      <div className={_.likes_wrap}>{likes}</div>
-      {isModalOpen && <Modal id={id}/>}
+    <li className={_.post}>
+      <Link to={`/picture/${id}`}>
+        <div className={_.img}>
+          <img src={urls.small}/>
+        </div>
+        <div className={_.likes_wrap}>{likes}</div>
+      </Link>
     </li>
   );
 };

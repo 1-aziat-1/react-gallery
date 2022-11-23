@@ -3,6 +3,7 @@ import {useDispatch} from 'react-redux';
 import {tokenUpdate} from './store/token/action';
 import Header from './components/Header';
 import Main from './components/Main';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   const dispath = useDispatch();
@@ -10,10 +11,14 @@ function App() {
   dispath(tokenUpdate(getToken()));
 
   return (
-    <>
-      <Header/>
-      <Main/>
-    </>
+    <Routes>
+      <Route path='*' element={
+        <>
+          <Header/>
+          <Main/>
+        </>
+      }/>
+    </Routes>
   );
 }
 

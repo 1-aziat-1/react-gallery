@@ -3,24 +3,28 @@ import {useDispatch, useSelector} from 'react-redux';
 import _ from './List.module.css';
 import Masonry from 'react-masonry-css';
 import Post from './Post';
-import {postsRequestAsync, updatePosts} from '../../../store/posts/action';
+import {postsRequestAsync} from '../../../store/posts/action';
+import {postsSlice} from '../../../store/posts/postsSlice';
+import { Outlet, useLocation } from 'react-router-dom';
 
 export const List = () => {
+  const location = useLocation();
+  const pageList = location.pathname !== '/';
   const postsData = useSelector(state => state.posts.posts);
+  const page = useSelector(state => state.posts.page);
   const endList = useRef(null);
   const dispatch = useDispatch();
-  let page = 0;
 
   useEffect(() => {
-    dispatch(updatePosts());
-    dispatch(postsRequestAsync(0));
-  }, []);
+    dispatch(postsSlice.actions.firstPhotos());
+    dispatch(postsRequestAsync());
+  }, [pageList]);
 
   useEffect(() => {
+    if (!postsData.length) return;
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        page = ++page;
-        dispatch(postsRequestAsync(page));
+        dispatch(postsRequestAsync());
       }
     }, {
       rootMargin: '50px',
@@ -32,25 +36,28 @@ export const List = () => {
       if (endList.current) {
         observer.unobserve(endList.current);
       }
-    }
-  }, [endList.current]);
+    };
+  }, [page]);
 
   return (
-    <ul className={_.list}>
-      <Masonry
-        breakpointCols={4}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-      >
-        {
-          postsData.map(post => (
-            <div key={post.id}>
-              <Post postData={post}/>
-            </div>
-          ))
-        }
-      </Masonry>
-      <li ref={endList} className={_.endlist}/>
-    </ul>
+    <>
+      <ul className={_.list}>
+        <Masonry
+          breakpointCols={4}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
+          {
+            postsData.map(post => (
+              <div key={post.id}>
+                <Post postData={post}/>
+              </div>
+            ))
+          }
+        </Masonry>
+        <li ref={endList} className={_.endlist}/>
+      </ul>
+      <Outlet/>
+    </>
   );
 };

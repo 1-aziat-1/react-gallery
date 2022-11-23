@@ -8,7 +8,7 @@ export const likeUpdate = (id, token, method) => {
 
   axios(url.href, {
     method,
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {Authorization: `Bearer ${token}`},
   })
-    .catch(error => ({ error: error.toString() }));
+    .catch(error => ({error: error.toString()}));
 };

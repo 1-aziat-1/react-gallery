@@ -1,5 +1,6 @@
 .post {
   position: relative;
+  min-height: 150px;
 }
 .likes_wrap {
   display: block;

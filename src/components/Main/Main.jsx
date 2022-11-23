@@ -1,13 +1,18 @@
 import React from 'react';
 import _ from './Main.module.css';
-import {Text} from '../../UI/Text';
 import {Layout} from '../Layout/Layout';
 import {List} from './List/List';
+import { Route, Routes } from 'react-router-dom';
+import { Modal } from '../Modal/Modal';
 
 export const Main = () => (
   <main className={_.main}>
     <Layout>
-      <List/>
+      <Routes>
+        <Route path='' element={<List/>}>
+          <Route path='/picture/:id' element={<Modal/>} />
+        </Route>
+      </Routes>
     </Layout>
   </main>
 );
