@@ -1,0 +1,30 @@
+.link {
+  display: block;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+}
+
+.authLink {
+  display: block;
+  width: 60px;
+  height: 60px;
+  outline: 2px solid transparent;
+  border-radius: 50%;
+  outline-offset: 2px;
+  transition: outline-color 0.36s ease-in-out;
+}
+
+.authLink:hover {
+  outline-color: var(--orange);
+}
+
+.authLink:focus {
+  outline-color: var(--orange);
+}
+
+.authLink:active {
+  outline-color: var(--orange);
+}

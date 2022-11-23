@@ -1,0 +1,17 @@
+.post {
+  position: relative;
+  min-height: 150px;
+}
+.likes_wrap {
+  display: block;
+  width: 64px;
+  height: 64px;
+  background-image: url(../../../../img/heart.png);
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  color: #fff;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 60px;
+}
