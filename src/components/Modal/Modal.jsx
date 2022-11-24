@@ -18,7 +18,6 @@ export const Modal = () => {
   const overlayRef = useRef(null);
   const dispatch = useDispatch();
   const [{urls, user}, status, likes, isLikes] = usePicture(id);
-  const auth = useSelector(state => state.auth.data);
   const token = useSelector(state => state.token.token);
   useEffect(() => {
     dispatch(pictureSlice.actions.newPhoto());
@@ -60,7 +59,7 @@ export const Modal = () => {
               <img className={_.img} src={urls.small}/>
             </div>
             <div className={_.interface}>
-              <a className={_.author} href={user.links.html} target='_blank'>
+              <a className={_.author} href={user.links.html} target='_blank' rel="noreferrer">
                 <img src={user.profile_image.medium}/>
                 <span className={_.author_tittle}>{user.name}</span>
               </a>
