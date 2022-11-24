@@ -17,7 +17,7 @@ export const Modal = () => {
   const navigate = useNavigate();
   const overlayRef = useRef(null);
   const dispatch = useDispatch();
-  const [picture, status, likes, isLikes] = usePicture(id);
+  const [{urls, user}, status, likes, isLikes] = usePicture(id);
   const auth = useSelector(state => state.auth.data);
   const token = useSelector(state => state.token.token);
   useEffect(() => {
@@ -57,10 +57,13 @@ export const Modal = () => {
         {status === 'loaded' && (
           <div className={_.container}>
             <div className={_.img_wraper}>
-              <img className={_.img} src={picture.urls.small}/>
+              <img className={_.img} src={urls.small}/>
             </div>
             <div className={_.interface}>
-              <p className={_.author}>{auth.name}</p>
+              <a className={_.author} href={user.links.html} target='_blank'>
+                <img src={user.profile_image.medium}/>
+                <span className={_.author_tittle}>{user.name}</span>
+              </a>
               <button className={_.btn_likes} onClick={clickLike}>
                 {isLikes ? <LikeIconC/> : <LikeIconB/>}
                 {likes}
