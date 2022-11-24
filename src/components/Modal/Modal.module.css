@@ -21,6 +21,18 @@
   margin: 0 auto;
 }
 
+.author {
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+
+.author_tittle {
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+
 .close {
   position: absolute;
   top: 15px;

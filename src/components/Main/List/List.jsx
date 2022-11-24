@@ -9,15 +9,17 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 export const List = () => {
   const location = useLocation();
-  const pageList = location.pathname !== '/';
+  const pageList = location.pathname;
   const postsData = useSelector(state => state.posts.posts);
   const page = useSelector(state => state.posts.page);
   const endList = useRef(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(postsSlice.actions.firstPhotos());
-    dispatch(postsRequestAsync());
+    if (location.pathname === '/') {
+      dispatch(postsSlice.actions.firstPhotos());
+      dispatch(postsRequestAsync());
+    }
   }, [pageList]);
 
   useEffect(() => {
