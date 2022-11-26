@@ -14,4 +14,9 @@
   vertical-align: middle;
   text-align: center;
   line-height: 60px;
+  opacity: 0;
+}
+
+.post:hover .likes_wrap {
+  opacity: 1;
 }
